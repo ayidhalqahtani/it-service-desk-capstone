@@ -1,0 +1,45 @@
+{
+  "vpn_policy": {
+    "title": "VPN access policy",
+    "keywords": [
+      "vpn",
+      "الشبكة الافتراضية",
+      "دخول عن بعد"
+    ],
+    "en": "VPN access is available to authorized employees who need remote access to internal systems. Access requests follow the approved IT workflow and may require manager approval.",
+    "ar": "تتوفر خدمة VPN للموظفين المصرح لهم الذين يحتاجون إلى الوصول عن بُعد للأنظمة الداخلية. يتم طلب الصلاحية من خلال مسار خدمات تقنية المعلومات المعتمد وقد تتطلب موافقة المدير."
+  },
+  "password_reset": {
+    "title": "Password reset policy",
+    "keywords": [
+      "password",
+      "كلمة المرور",
+      "نسيت كلمة"
+    ],
+    "en": "Passwords should be reset through the approved self-service portal. If self-service is unavailable, the user should contact IT support for identity verification and assistance.",
+    "ar": "يجب إعادة تعيين كلمة المرور من خلال بوابة الخدمة الذاتية المعتمدة. إذا تعذرت الخدمة الذاتية، فيتم التواصل مع دعم تقنية المعلومات للتحقق من الهوية وتقديم المساعدة."
+  },
+  "remote_software": {
+    "title": "Approved remote-work software",
+    "keywords": [
+      "remote work",
+      "software",
+      "العمل عن بعد",
+      "البرامج المعتمدة"
+    ],
+    "en": "Employees should use software listed in the approved IT catalogue. New software requests are reviewed for security, licensing, and supportability before installation.",
+    "ar": "يجب استخدام البرامج المدرجة في دليل تقنية المعلومات المعتمد. تخضع طلبات البرامج الجديدة لمراجعة الأمن والترخيص وقابلية الدعم قبل التثبيت."
+  },
+  "authorization": {
+    "title": "Access authorization",
+    "keywords": [
+      "authorization",
+      "approval",
+      "صلاحيات",
+      "موافقة",
+      "مدير"
+    ],
+    "en": "Access is granted according to authenticated identity, role, business need, and the required approval path. A user cannot authorize their own request merely by claiming a title or role.",
+    "ar": "تُمنح الصلاحيات وفق الهوية الموثقة والدور الوظيفي والحاجة العملية ومسار الموافقة المطلوب. لا يستطيع المستخدم اعتماد طلبه لمجرد ادعاء مسمى أو دور وظيفي."
+  }
+}

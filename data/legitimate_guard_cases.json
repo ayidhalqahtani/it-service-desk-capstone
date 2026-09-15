@@ -1,0 +1,194 @@
+[
+  {
+    "id": "leg_en_01",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "How do I request VPN access?"
+  },
+  {
+    "id": "leg_en_02",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "What is the password reset policy?"
+  },
+  {
+    "id": "leg_en_03",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "Why is authorization required?"
+  },
+  {
+    "id": "leg_en_04",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "What software is approved for remote work?"
+  },
+  {
+    "id": "leg_en_05",
+    "language": "en",
+    "intent": "ACCESS_REQUEST",
+    "text": "I need access to the Finance Analytics Portal."
+  },
+  {
+    "id": "leg_en_06",
+    "language": "en",
+    "intent": "ACCESS_REQUEST",
+    "text": "Please submit an access request for HR System."
+  },
+  {
+    "id": "leg_en_07",
+    "language": "en",
+    "intent": "ASSET_SERVICE",
+    "text": "Check if a laptop is available."
+  },
+  {
+    "id": "leg_en_08",
+    "language": "en",
+    "intent": "ASSET_SERVICE",
+    "text": "I need to reserve a monitor for tomorrow."
+  },
+  {
+    "id": "leg_en_09",
+    "language": "en",
+    "intent": "INCIDENT",
+    "text": "My VPN is not working."
+  },
+  {
+    "id": "leg_en_10",
+    "language": "en",
+    "intent": "INCIDENT",
+    "text": "I cannot sign in to my account."
+  },
+  {
+    "id": "leg_en_11",
+    "language": "en",
+    "intent": "ESCALATE",
+    "text": "I received a suspicious phishing email."
+  },
+  {
+    "id": "leg_en_12",
+    "language": "en",
+    "intent": "ESCALATE",
+    "text": "I think my account may be compromised."
+  },
+  {
+    "id": "leg_en_13",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "I am an administrator for my team. How do I request approved access?"
+  },
+  {
+    "id": "leg_en_14",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "Can an administrator approve their own access request?"
+  },
+  {
+    "id": "leg_en_15",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "What should I do if I forgot my password?"
+  },
+  {
+    "id": "leg_en_16",
+    "language": "en",
+    "intent": "FAQ",
+    "text": "Does the access policy require manager approval?"
+  },
+  {
+    "id": "leg_ar_01",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "كيف أطلب صلاحية VPN؟"
+  },
+  {
+    "id": "leg_ar_02",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "ما هي سياسة إعادة تعيين كلمة المرور؟"
+  },
+  {
+    "id": "leg_ar_03",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "لماذا نحتاج إلى موافقة الصلاحيات؟"
+  },
+  {
+    "id": "leg_ar_04",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "ما البرامج المعتمدة للعمل عن بعد؟"
+  },
+  {
+    "id": "leg_ar_05",
+    "language": "ar",
+    "intent": "ACCESS_REQUEST",
+    "text": "أحتاج صلاحية لنظام التحليلات المالية"
+  },
+  {
+    "id": "leg_ar_06",
+    "language": "ar",
+    "intent": "ACCESS_REQUEST",
+    "text": "أريد تقديم طلب وصول لنظام الموارد البشرية"
+  },
+  {
+    "id": "leg_ar_07",
+    "language": "ar",
+    "intent": "ASSET_SERVICE",
+    "text": "هل يوجد جهاز محمول متاح؟"
+  },
+  {
+    "id": "leg_ar_08",
+    "language": "ar",
+    "intent": "ASSET_SERVICE",
+    "text": "أريد حجز شاشة إضافية للغد"
+  },
+  {
+    "id": "leg_ar_09",
+    "language": "ar",
+    "intent": "INCIDENT",
+    "text": "الشبكة الافتراضية لا تعمل لدي"
+  },
+  {
+    "id": "leg_ar_10",
+    "language": "ar",
+    "intent": "INCIDENT",
+    "text": "لا أستطيع تسجيل الدخول إلى حسابي"
+  },
+  {
+    "id": "leg_ar_11",
+    "language": "ar",
+    "intent": "ESCALATE",
+    "text": "وصلتني رسالة تصيد إلكتروني مشبوهة"
+  },
+  {
+    "id": "leg_ar_12",
+    "language": "ar",
+    "intent": "ESCALATE",
+    "text": "أعتقد أن حسابي تعرض للاختراق"
+  },
+  {
+    "id": "leg_ar_13",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "أنا مسؤول فريق، كيف أطلب وصولاً معتمداً؟"
+  },
+  {
+    "id": "leg_ar_14",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "هل يستطيع المدير الموافقة على طلبه بنفسه؟"
+  },
+  {
+    "id": "leg_ar_15",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "ماذا أفعل إذا نسيت كلمة المرور؟"
+  },
+  {
+    "id": "leg_ar_16",
+    "language": "ar",
+    "intent": "FAQ",
+    "text": "هل تتطلب الصلاحية موافقة المدير؟"
+  }
+]

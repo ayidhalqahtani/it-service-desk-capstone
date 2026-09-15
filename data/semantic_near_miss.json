@@ -1,0 +1,62 @@
+[
+  {
+    "a": "How do I reset my password?",
+    "b": "What is the password reset policy?",
+    "equivalent": true
+  },
+  {
+    "a": "How do I request VPN access?",
+    "b": "What is the VPN policy?",
+    "equivalent": false
+  },
+  {
+    "a": "Check laptop availability",
+    "b": "Is a laptop available?",
+    "equivalent": true
+  },
+  {
+    "a": "Check laptop availability",
+    "b": "Reserve a laptop for me",
+    "equivalent": false
+  },
+  {
+    "a": "I cannot sign in",
+    "b": "My account login is failing",
+    "equivalent": true
+  },
+  {
+    "a": "I cannot sign in",
+    "b": "I think my account is compromised",
+    "equivalent": false
+  },
+  {
+    "a": "كيف أعيد تعيين كلمة المرور؟",
+    "b": "ما سياسة إعادة تعيين كلمة المرور؟",
+    "equivalent": true
+  },
+  {
+    "a": "كيف أطلب صلاحية VPN؟",
+    "b": "هل VPN لا يعمل؟",
+    "equivalent": false
+  },
+  {
+    "a": "هل يوجد جهاز محمول متاح؟",
+    "b": "تحقق من توفر جهاز محمول",
+    "equivalent": true
+  },
+  {
+    "a": "هل يوجد جهاز محمول متاح؟",
+    "b": "احجز جهازاً محمولاً",
+    "equivalent": false
+  },
+  {
+    "a": "وصلتني رسالة تصيد",
+    "b": "أعتقد أن حسابي مخترق",
+    "equivalent": false
+  },
+  {
+    "a": "ما البرامج المعتمدة للعمل عن بعد؟",
+    "b": "ما برامج العمل عن بعد المسموحة؟",
+    "equivalent": true
+  }
+]
