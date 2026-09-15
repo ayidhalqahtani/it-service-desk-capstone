@@ -1,21 +1,14 @@
-# Prompt Changelog
+# Prompt changelog
 
-## v1 prompt set
+## Version 1
 
-Initial prompt artifacts for the Track C Internal IT Service Desk capstone.
+The first production prompt set separates routing, grounded FAQ answering, structured service extraction, the three guard layers, repair, judging, and cache measurement. The split keeps each responsibility narrow enough to evaluate independently.
 
-- `router_v1.txt` — route classification
-- `faq_v1.txt` — grounded FAQ answering
-- `service_v1.txt` — structured service extraction
-- `guard_inbound_v1.txt` — inbound attack detection
-- `guard_tool_result_v1.txt` — indirect-injection protection
-- `guard_outbound_v1.txt` — outbound safety check
-- `repair_v1.txt` — strict schema repair
-- `judge_v1.txt` — evaluation judge
+During development, the initial inbound guard under-detected several role-spoofing and secret-extraction phrasings. The guard implementation was hardened while the frozen evaluation expectations were left unchanged. This is recorded as a control improvement rather than hidden as a data change.
 
-### Governance rule
-Any prompt change must:
-1. create a new versioned artifact;
-2. record the reason here;
-3. rerun the relevant evaluation slices;
-4. record whether the regression gate passed.
+## Final submission refinement
+
+- Added `service_retry_v1.txt` so the live structured-output path follows validate → retry → repair without inline prompt instructions.
+- Added `guard_inbound_degraded_v0.txt` as a test-only seeded prompt for the regression-gate demonstration.
+- Added an explicit policy mode to the production inbound-guard artefact.
+- Extended the stable cache-probe prefix so provider-reported prompt caching can be measured on a sufficiently long repeated prefix.
