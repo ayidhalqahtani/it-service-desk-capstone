@@ -1,14 +1,21 @@
 # Prompt Changelog
 
-Prompt artifacts will be versioned in this directory.
+## v1 prompt set
 
-Each change should record:
+Initial prompt artifacts for the Track C Internal IT Service Desk capstone.
 
-- prompt/version identifier;
-- date;
-- reason for change;
-- evaluation run used to assess it;
-- affected slices;
-- whether the regression gate passed.
+- `router_v1.txt` — route classification
+- `faq_v1.txt` — grounded FAQ answering
+- `service_v1.txt` — structured service extraction
+- `guard_inbound_v1.txt` — inbound attack detection
+- `guard_tool_result_v1.txt` — indirect-injection protection
+- `guard_outbound_v1.txt` — outbound safety check
+- `repair_v1.txt` — strict schema repair
+- `judge_v1.txt` — evaluation judge
 
-Do not place production prompt text inline in arbitrary notebook cells.
+### Governance rule
+Any prompt change must:
+1. create a new versioned artifact;
+2. record the reason here;
+3. rerun the relevant evaluation slices;
+4. record whether the regression gate passed.
