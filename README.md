@@ -2,8 +2,8 @@
 
 **Track:** C — Internal IT Service Desk  
 **Programme:** SDA-AIE-213 — LLM Application Engineering, SDAIA Academy  
-**Student:** [REPLACE WITH YOUR FULL NAME BEFORE SUBMISSION]  
-**Cohort dates:** [REPLACE WITH OFFICIAL COHORT DATES BEFORE SUBMISSION]  
+**Student:** Ayidh Alqahtani  
+**Cohort dates:** 9/13/2026  
 **Chosen extension:** Indirect-injection hardening
 
 ## Project overview
@@ -251,11 +251,4 @@ Before final submission, the repository will include measured—not planned—ev
 - `BENCHMARKS.md`
 - `DECISIONS.md`
 - the executed notebook outputs
-
-No benchmark, safety, quality, or cost result should be claimed unless it was actually produced by the notebook.
-
-## Acknowledgement
-
-Completed under **SDA-AIE-213 — LLM Application Engineering, SDAIA Academy**.
-
-SDAIA Academy GitHub: https://github.com/SDAIA-Academy
+A
