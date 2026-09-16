@@ -14,7 +14,7 @@ This project implements a bilingual Arabic/English internal IT service desk. It 
 
 The design separates low-risk FAQ traffic from service workflows. Authorization is enforced in application code through authenticated session state; prompt text cannot grant a user additional privileges.
 
-The default Colab run uses an open-weight model and does not require an API key; this satisfies the fresh-run requirement. When `OPENAI_API_KEY` is available, the same notebook additionally exercises the commercial backend, provider-native strict structured output, native function calling, judge calibration, prompt-cache measurement, commercial cost replay, and commercial-versus-open-weight comparison on the frozen golden set. The notebook reports whether each credential-dependent evidence block actually executed rather than claiming it in advance.
+The notebook runs end-to-end from a fresh Colab runtime using the open-weight backend without requiring credentials. A commercial adapter is implemented behind the same `LLMClient` boundary and can be exercised when credentials are available, without changing the application code or the default execution path.
 
 ## Architecture
 
@@ -56,9 +56,9 @@ PII is masked before model calls and before application logging.
 
 ## Structured outputs and tools
 
-`ITServiceRequest` is a strict Pydantic schema. The open-weight path uses validate → retry → repair. The commercial path uses provider-native strict JSON Schema output and then applies the same Pydantic validation.
+`ITServiceRequest` is a strict Pydantic schema. The open-weight path uses validate → retry → repair. The commercial adapter supports provider-native strict JSON Schema output and applies the same Pydantic validation locally.
 
-The commercial evidence path also demonstrates a real function-calling loop: the model emits function calls, the application dispatches only registered tools, authorization is checked inside side-effecting tools, results are returned as function-call outputs, and the loop is bounded.
+The commercial adapter also supports function calling through a bounded tool loop. The application dispatches only registered tools, authorization is checked inside side-effecting tools, and tool results are inspected before reuse.
 
 ## Evaluation
 
@@ -70,16 +70,16 @@ The repository contains a frozen 72-case golden set with Arabic-majority coverag
 - safety-stratum pass rate
 - attack block rate and legitimate false-positive rate
 - structured-output pass rate by language
-- judge calibration and Cohen's kappa
+- judge calibration status
 - clean and deliberately degraded regression-gate runs
 
-The LLM judge is allowed into the regression evidence only when its measured Cohen's kappa is at least 0.60.
+Safety remains a hard gate. The judge contributes to decisions only when its calibration threshold is met.
 
-## Model and cost evidence
+## Cost and latency
 
-The final credentialed run evaluates the commercial and open-weight backends on the same frozen golden set and records model IDs, quality, latency, token usage, safety, and commercial cost.
+The shared model boundary records input tokens, output tokens, cached input tokens when reported by the provider, latency, backend, model, call type, and estimated cost where applicable.
 
-Commercial prompt-cache evidence uses provider-reported `cached_input_tokens`. Cost optimization is measured by replaying the workload rather than projecting a percentage. Self-host break-even uses measured commercial cost per request and measured local throughput.
+The notebook also demonstrates response caching, semantic-cache safety checks, local throughput measurement, and break-even analysis. Provider-specific cache and commercial-cost evidence is reported only when that backend is exercised.
 
 ## Run
 
@@ -89,9 +89,9 @@ Use the badge at the top of this README, then choose:
 
 **Runtime → Restart session and run all**
 
-The notebook clones this repository and installs missing dependencies. The open-weight path is the default.
+The notebook clones this repository, installs missing dependencies, and runs the complete keyless open-weight path by default.
 
-For the full commercial evidence run, add `OPENAI_API_KEY` to Colab Secrets or the runtime environment before running the notebook. No credential is stored in this repository.
+If a commercial credential is available, it may be supplied through Colab Secrets or the runtime environment to enable the additional commercial-backend evidence. No credential is stored in this repository.
 
 ### Makefile
 
@@ -124,18 +124,8 @@ The preflight command verifies the repository structure, versioned prompts, mode
 
 ## Evidence policy
 
-Documentation describes only behavior implemented by the repository. Live commercial metrics are reported as measured only when the captured notebook run shows the commercial backend executed.
+The executed notebook is the source of truth for measured results. Optional backend evidence is reported only when that backend is exercised in the captured run.
 
 ## SDAIA Academy
 
 Programme reference: [SDAIA Academy GitHub](https://github.com/SDAIAAcademy)
-
-
-## Final scoring run
-
-The notebook has two valid modes:
-
-- **Keyless default:** completes end-to-end with the open-weight backend and all deterministic safety/tool demonstrations.
-- **Credentialed scoring run:** additionally executes the live commercial backend, strict provider schema, native function calling, judge calibration, provider-reported prompt caching, measured cost replay, and two-backend comparison.
-
-For a 100-point target, submit an executed credentialed run in which all hard evidence gates print PASS. The notebook is deliberately written to fail rather than overclaim if κ, safety, cached-token share, or measured cost reduction misses the rubric threshold.
