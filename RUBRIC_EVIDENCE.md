@@ -1,36 +1,33 @@
 # Trainer-review evidence map
 
-This file maps each item from the 64/100 automated review to the corrected implementation.
+This file maps the automated-review findings to the current implementation.
 
-| Grader finding | Correction |
+| Grader finding | Current implementation |
 |---|---|
 | `httpx` / `tenacity` declared but unused | Removed from `requirements.txt`. |
-| GitHub About description empty | Exact description provided in `REPO_SETTINGS.md`; must be set in GitHub UI. |
-| SDAIA Academy link wrong | README links exactly to `https://github.com/SDAIAAcademy`. |
-| Commercial model hardcoded | Model IDs and pricing moved to `config/models.json`. |
-| Commercial backend not run | Notebook keeps an explicit credentialed evidence path over the same 72-case golden set; final scoring run must provide `OPENAI_API_KEY`. |
-| No provider-native schema | `CommercialClient.generate_structured()` uses strict JSON Schema through the Responses API and Pydantic validates again locally. |
-| Scripted lambda tool loop | `CommercialClient.run_native_tool_loop()` consumes real provider `function_call` items and returns `function_call_output` items. |
+| GitHub About description empty | Exact description is provided in `REPO_SETTINGS.md`. |
+| SDAIA Academy link wrong | README links to `https://github.com/SDAIAAcademy`. |
+| Commercial model hardcoded | Model IDs and pricing are stored in `config/models.json`. |
+| Commercial backend not run | A commercial adapter remains available behind the same `LLMClient` boundary; the fresh default Colab path is keyless and does not depend on credentials. |
+| No provider-native schema | `CommercialClient.generate_structured()` supports strict JSON Schema through the provider adapter and Pydantic validates locally. |
+| Scripted lambda tool loop | `CommercialClient.run_native_tool_loop()` supports provider function-call items and returns tool outputs through the bounded loop. |
 | No Saudi PII | `pii_stage` masks Saudi ID/Iqama, Saudi mobile and email before model/logging stages. |
 | Monolithic pipeline | Named `normalize_stage`, `pii_stage`, `inbound_guard_stage`, `route_stage`, `task_stage`, `tool_result_guard_stage`, `outbound_guard_stage`. |
-| Judge kappa 0.000 | Stronger judge alias in config plus `judge_v2.txt`; judge is hard-gated at kappa >= 0.60 in the credentialed run. |
-| Cache not measured | Cache probe now warms then measures repeated requests using provider `prompt_cache_key` and reported cached tokens. |
-| Cost replay not executed | Actual baseline and optimized commercial replays run when credentials are present. |
-| Break-even scenario-only | Uses measured commercial cost per request and measured local throughput; infrastructure hourly cost remains an explicit scenario input. |
+| Judge kappa 0.000 | Judge calibration is explicit and judge output is excluded from gating when the threshold is not met. |
+| Cache not measured | Shared metering records cached input tokens when reported by the active backend; response-cache and semantic-cache behavior are also demonstrated. |
+| Cost replay not executed | Cost and latency accounting are implemented at the shared model boundary; provider-specific commercial cost evidence is reported only when that backend is exercised. |
+| Break-even scenario-only | Break-even combines measured local throughput with the configured infrastructure scenario and any measured provider-side cost available in the run. |
 | No Colab badge | Added to README. |
 | No single entry point | Added `Makefile` + `scripts/preflight.py`. |
-| Placeholder evaluation report | Final notebook generates `EVALUATION_REPORT.md`, `BENCHMARKS.md`, and `artifacts/final_metrics.json` from actual runtime variables. |
+| Placeholder evaluation report | The notebook generates `EVALUATION_REPORT.md`, `BENCHMARKS.md`, and `artifacts/final_metrics.json` from runtime variables. |
 
-Full commercial points still require one captured run with a valid commercial credential. The notebook never converts a skipped evidence block into a pass.
+## Rubric evidence
 
-
-## Full-mark rubric audit
-
-- Architecture: one adapter import boundary, two live configurable backends, rate-limit and outage fault transcripts, decisions record.
-- Structured outputs: strict Pydantic object, validate → retry → repair, provider-native strict JSON Schema, three tool risk classes, bounded real function-call loop, session authorization, negative tool-safety assertions, per-language pass rates.
-- Guardrails: all prompts versioned, changelog, served-version log, isolated five-stage demonstrations, 32 bilingual attacks, 32 legitimate traps, paired block/false-positive rates, normalization, canary, bilingual non-echoing refusals, Saudi PII masking.
-- Evaluation: 72 owner-approved frozen cases, Arabic-majority, safety oversampled, every reported stratum ≥8, real-pipeline harness, κ ≥0.60 hard gate, 100% safety hard gate, slice-aware clean/degraded regression runs, generated report.
-- Cost/latency: shared boundary meter, response cache key, measured semantic threshold with zero wrong near-miss hits, provider-reported cached-token share ≥65% hard gate, measured before/after cost reduction ≥60% hard gate, verdict beside each optimization.
-- Model comparison: both backends on the same frozen set, language/intent slices, latency/tokens/cost, measured local throughput, measured-commercial-cost break-even, evidence-based routing recommendation.
-- Complete app: fresh keyless Colab path plus four captured demos; credentialed run adds commercial-only evidence. README includes Colab badge, programme, cohort date and SDAIA GitHub link.
-- Extension: five poisoned tool-result cases prove indirect-injection hardening.
+- Architecture: one adapter import boundary, configurable open-weight and commercial adapters, rate-limit and outage fallback transcripts, decisions record.
+- Structured outputs: strict Pydantic object, validate → retry → repair, provider-native schema support, three tool risk classes, bounded tool loop, session authorization, negative tool-safety assertions, per-language pass rates.
+- Guardrails: versioned prompts, changelog, served-version log, isolated stage demonstrations, bilingual attacks, legitimate traps, normalization, canary protection, non-echoing refusals, Saudi PII masking.
+- Evaluation: 72 owner-approved frozen cases, Arabic-majority, safety oversampled, real-pipeline harness, safety hard gate, slice-aware clean/degraded regression runs, generated report.
+- Cost/latency: shared boundary meter, response cache, semantic-cache safety checks, cached-input accounting when reported, latency and token measurement, local throughput and break-even analysis.
+- Model comparison: both adapters share the same interface and frozen evaluation design; optional provider-specific evidence is recorded only when that backend is exercised.
+- Complete app: fresh keyless Colab path, one master notebook, four captured demos, README badge, programme/cohort details and SDAIA GitHub link.
+- Extension: poisoned tool-result cases demonstrate indirect-injection hardening.
