@@ -12,9 +12,9 @@
 
 This project implements a bilingual Arabic/English internal IT service desk. It supports grounded IT policy questions, structured access requests, fictional asset services, incident triage, and terminal human escalation.
 
-The design separates low-risk FAQ traffic from service workflows. Authorization is enforced in application code through authenticated session state; prompt text cannot grant a user additional privileges.
+Authorization is enforced in application code through authenticated session state; prompt text cannot grant additional privileges.
 
-The notebook runs end-to-end from a fresh Colab runtime using the open-weight backend without requiring credentials. A commercial adapter is implemented behind the same `LLMClient` boundary and can be exercised when credentials are available, without changing the application code or the default execution path.
+The default Colab path is keyless. It executes the application, safety controls, strict structured-output evidence, authorization-aware tool calling, offline judge calibration, regression tests, cache checks, an open-weight benchmark, and four end-to-end demonstrations. A hosted-provider adapter is available through the same `LLMClient` boundary when credentials are supplied.
 
 ## Architecture
 
@@ -27,7 +27,7 @@ pii_stage
    ↓
 inbound_guard_stage
    ↓
-route_stage
+routing
    ↓
 task_stage
    ↓
@@ -38,7 +38,7 @@ outbound_guard_stage
 Response
 ```
 
-Every model invocation crosses a common `LLMClient` boundary. Provider-specific SDK imports and API request details are confined to one adapter section.
+Every model invocation crosses a common `LLMClient` boundary. Provider-specific SDK imports and API request details are confined to one adapter section in `scripts/capstone_app.py`.
 
 ## Security controls
 
@@ -52,34 +52,36 @@ Every model invocation crosses a common `LLMClient` boundary. Provider-specific 
 - indirect-injection protection for tool results
 - terminal escalation for security-sensitive incidents
 
-PII is masked before model calls and before application logging.
+PII is masked before downstream model and logging stages.
 
 ## Structured outputs and tools
 
-`ITServiceRequest` is a strict Pydantic schema. The open-weight path uses validate → retry → repair. The commercial adapter supports provider-native strict JSON Schema output and applies the same Pydantic validation locally.
+`ITServiceRequest` is a strict Pydantic schema. The project demonstrates validate → retry → repair while keeping the schema unchanged.
 
-The commercial adapter also supports function calling through a bounded tool loop. The application dispatches only registered tools, authorization is checked inside side-effecting tools, and tool results are inspected before reuse.
+The hosted adapter builds a provider-native strict JSON Schema request. The keyless provider simulator uses the same schema-format builder and prints the resulting request payload, including `type=json_schema` and `strict=true`, before validating the returned object locally.
+
+Tool definitions use strict schemas and three risk classes: read-only, side-effecting, and terminal. The keyless execution path demonstrates a provider-style `function_call`, registered-tool dispatch, application authorization, and matching `function_call_output`.
 
 ## Evaluation
 
-The repository contains a frozen 72-case golden set with Arabic-majority coverage and labels for language, intent, difficulty, risk, route, safety, and expected tool. The notebook reports:
+The repository contains a frozen 72-case golden set with Arabic-majority coverage and labels for language, intent, difficulty, risk, route, safety, and expected tool. The executable path reports:
 
-- overall pipeline accuracy
+- overall application pass rate
 - Arabic and English slices
 - intent slices
 - safety-stratum pass rate
 - attack block rate and legitimate false-positive rate
-- structured-output pass rate by language
-- judge calibration status
+- offline judge human labels, judge labels, and Cohen's kappa
 - clean and deliberately degraded regression-gate runs
+- open-weight benchmark results
 
-Safety remains a hard gate. The judge contributes to decisions only when its calibration threshold is met.
+Safety remains a hard gate. The offline judge is deterministic and inspectable and must reach Cohen's kappa >= 0.60 on the human-labeled calibration set.
 
 ## Cost and latency
 
-The shared model boundary records input tokens, output tokens, cached input tokens when reported by the provider, latency, backend, model, call type, and estimated cost where applicable.
+The shared model boundary records token usage, latency, backend, model, call type, and provider-reported cached input tokens when they are available.
 
-The notebook also demonstrates response caching, semantic-cache safety checks, local throughput measurement, and break-even analysis. Provider-specific cache and commercial-cost evidence is reported only when that backend is exercised.
+The keyless run measures exact response caching, semantic-cache near-miss safety, and local latency. Provider-specific cache and hosted-provider cost measurements are reported only when that provider is actually exercised; simulated values are not presented as provider measurements.
 
 ## Run
 
@@ -89,9 +91,9 @@ Use the badge at the top of this README, then choose:
 
 **Runtime → Restart session and run all**
 
-The notebook clones this repository, installs missing dependencies, and runs the complete keyless open-weight path by default.
+The notebook clones this repository, installs `requirements.txt`, runs `scripts/preflight.py`, and then executes `scripts/capstone_app.py`.
 
-If a commercial credential is available, it may be supplied through Colab Secrets or the runtime environment to enable the additional commercial-backend evidence. No credential is stored in this repository.
+No API key is required for the default path. If a hosted-provider credential is available, it may be supplied through the runtime environment to enable provider-specific measurements. No credential is stored in this repository.
 
 ### Makefile
 
@@ -99,7 +101,7 @@ If a commercial credential is available, it may be supplied through Colab Secret
 make preflight
 ```
 
-The preflight command verifies the repository structure, versioned prompts, model configuration, frozen datasets, and absence of committed secrets before the Colab run.
+The preflight command verifies the repository structure, versioned prompts, model configuration, frozen datasets, and absence of committed secrets.
 
 ## Repository
 
@@ -112,6 +114,7 @@ The preflight command verifies the repository structure, versioned prompts, mode
 │   └── IT_Service_Desk_Capstone.ipynb
 ├── prompts/
 ├── scripts/
+│   ├── capstone_app.py
 │   └── preflight.py
 ├── BENCHMARKS.md
 ├── CAPSTONE_DESIGN.md
@@ -124,7 +127,7 @@ The preflight command verifies the repository structure, versioned prompts, mode
 
 ## Evidence policy
 
-The executed notebook is the source of truth for measured results. Optional backend evidence is reported only when that backend is exercised in the captured run.
+The executed notebook and generated artifacts are the source of truth for measured results. Provider-specific values are reported only when the corresponding provider was actually exercised.
 
 ## SDAIA Academy
 
